@@ -50,6 +50,11 @@ def configure_logging(*, environment: str = "development") -> None:
     logging.getLogger("httpcore").setLevel(logging.WARNING)
     logging.getLogger("anthropic").setLevel(logging.WARNING)
 
+    for uvi_name in ("uvicorn", "uvicorn.error", "uvicorn.access"):
+        uvi = logging.getLogger(uvi_name)
+        uvi.handlers.clear()
+        uvi.propagate = True
+
 
 def get_logger(name: str = __name__) -> structlog.stdlib.BoundLogger:
     return structlog.get_logger(name)
