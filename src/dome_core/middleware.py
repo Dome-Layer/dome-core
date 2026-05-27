@@ -1,8 +1,32 @@
 from __future__ import annotations
 
+import uuid
+
+import structlog
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 from starlette.responses import Response
+
+
+class RequestIDMiddleware(BaseHTTPMiddleware):
+    """Inject a unique request ID into every request/response cycle.
+
+    Accepts an incoming ``X-Request-Id`` header for upstream propagation;
+    generates a UUID4 if absent.  Binds ``request_id`` into structlog
+    contextvars so every log line within the request includes it, and
+    returns the ID on the ``X-Request-Id`` response header.
+    """
+
+    async def dispatch(self, request: Request, call_next) -> Response:  # type: ignore[no-untyped-def]
+        structlog.contextvars.clear_contextvars()
+        request_id = request.headers.get("x-request-id") or str(uuid.uuid4())
+        structlog.contextvars.bind_contextvars(request_id=request_id)
+        try:
+            response: Response = await call_next(request)
+            response.headers["X-Request-Id"] = request_id
+            return response
+        finally:
+            structlog.contextvars.clear_contextvars()
 
 
 class SecurityHeadersMiddleware(BaseHTTPMiddleware):
