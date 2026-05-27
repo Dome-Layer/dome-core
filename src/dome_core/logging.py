@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import sys
 
 import structlog
 
@@ -38,7 +39,7 @@ def configure_logging(*, environment: str = "development") -> None:
         ],
     )
 
-    handler = logging.StreamHandler()
+    handler = logging.StreamHandler(stream=sys.stdout)
     handler.setFormatter(formatter)
     root = logging.getLogger()
     root.handlers.clear()
@@ -47,6 +48,7 @@ def configure_logging(*, environment: str = "development") -> None:
 
     logging.getLogger("httpx").setLevel(logging.WARNING)
     logging.getLogger("httpcore").setLevel(logging.WARNING)
+    logging.getLogger("anthropic").setLevel(logging.WARNING)
 
 
 def get_logger(name: str = __name__) -> structlog.stdlib.BoundLogger:
