@@ -45,3 +45,8 @@ jobs:
         run: mypy src/ tests/
       - name: Tests (pytest)
         run: pytest
+      - name: Security audit (pip-audit)
+        # DA-007: scan the pinned production lock for known CVEs. --no-deps audits
+        # exactly the compiled-pinned versions. Dev deps are watched by Dependabot,
+        # not gated here. uvx is provided by astral-sh/setup-uv above.
+        run: uvx pip-audit --no-deps -r requirements.txt
