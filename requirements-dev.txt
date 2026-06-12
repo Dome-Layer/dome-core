@@ -42,7 +42,7 @@ hpack==4.1.0
     # via h2
 httpcore==1.0.9
     # via httpx
-httpx[http2]==0.28.1
+httpx==0.28.1
     # via
     #   -r requirements-dev.in
     #   anthropic
@@ -97,7 +97,7 @@ pydantic-core==2.46.4
     # via pydantic
 pygments==2.20.0
     # via pytest
-pyjwt[crypto]==2.13.0
+pyjwt==2.13.0
     # via
     #   -r requirements.in
     #   supabase-auth
@@ -111,7 +111,7 @@ realtime==2.31.0
     # via supabase
 ruff==0.15.16
     # via -r requirements-dev.in
-sentry-sdk[fastapi]==2.62.0
+sentry-sdk==2.62.0
     # via -r requirements.in
 sniffio==1.3.1
     # via anthropic
