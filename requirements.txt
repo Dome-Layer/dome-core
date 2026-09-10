@@ -18,7 +18,7 @@ certifi==2026.5.20
     #   sentry-sdk
 cffi==2.0.0
     # via cryptography
-cryptography==48.0.1
+cryptography==50.0.1
     # via pyjwt
 deprecation==2.1.0
     # via
@@ -34,9 +34,9 @@ fastapi==0.136.3
     #   sentry-sdk
 h11==0.16.0
     # via httpcore
-h2==4.3.0
+h2==4.4.1
     # via httpx
-hpack==4.1.0
+hpack==4.2.0
     # via h2
 httpcore==1.0.9
     # via httpx
