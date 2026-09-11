@@ -30,7 +30,7 @@ distro==1.9.0
     # via anthropic
 docstring-parser==0.18.0
     # via anthropic
-fastapi==0.136.3
+fastapi==0.141.1
     # via
     #   -r requirements.in
     #   sentry-sdk
@@ -42,7 +42,7 @@ hpack==4.2.0
     # via h2
 httpcore==1.0.9
     # via httpx
-httpx==0.28.1
+httpx[http2]==0.28.1
     # via
     #   -r requirements-dev.in
     #   anthropic
@@ -84,7 +84,7 @@ propcache==0.5.2
     # via yarl
 pycparser==3.0
     # via cffi
-pydantic==2.13.4
+pydantic==2.13.5
     # via
     #   -r requirements.in
     #   anthropic
@@ -93,15 +93,15 @@ pydantic==2.13.4
     #   realtime
     #   storage3
     #   supabase-auth
-pydantic-core==2.46.4
+pydantic-core==2.46.5
     # via pydantic
 pygments==2.20.0
     # via pytest
-pyjwt==2.13.0
+pyjwt[crypto]==2.13.0
     # via
     #   -r requirements.in
     #   supabase-auth
-pytest==9.0.3
+pytest==9.1.1
     # via
     #   -r requirements-dev.in
     #   pytest-asyncio
@@ -109,9 +109,9 @@ pytest-asyncio==1.4.0
     # via -r requirements-dev.in
 realtime==2.31.0
     # via supabase
-ruff==0.15.16
+ruff==0.16.6
     # via -r requirements-dev.in
-sentry-sdk==2.62.0
+sentry-sdk[fastapi]==2.69.0
     # via -r requirements.in
 sniffio==1.3.1
     # via anthropic
