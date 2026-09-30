@@ -78,7 +78,7 @@ pydantic==2.13.4
     #   supabase-auth
 pydantic-core==2.46.4
     # via pydantic
-pyjwt==2.13.0
+pyjwt==2.15.1
     # via
     #   -r requirements.in
     #   supabase-auth
