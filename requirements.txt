@@ -116,7 +116,7 @@ typing-inspection==0.4.2
     # via
     #   fastapi
     #   pydantic
-urllib3==2.7.0
+urllib3==2.8.0
     # via sentry-sdk
 websockets==15.0.1
     # via realtime
