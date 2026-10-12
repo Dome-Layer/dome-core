@@ -6,7 +6,7 @@ from typing import Optional
 import anthropic
 
 from dome_core.json_utils import parse_json_response
-from dome_core.llm.base import LLMProvider
+from dome_core.llm.base import LLMOutputTruncatedError, LLMProvider
 from dome_core.llm.retry import with_retry
 from dome_core.logging import get_logger
 
@@ -22,6 +22,12 @@ class ClaudeProvider(LLMProvider):
         self._model = model
         self._max_tokens = max_tokens
 
+    def _text(self, response) -> str:
+        if response.stop_reason == "max_tokens":
+            logger.warning("llm_output_truncated", model=self._model, max_tokens=self._max_tokens)
+            raise LLMOutputTruncatedError(self._max_tokens)
+        return response.content[0].text
+
     async def generate(self, prompt: str, system: Optional[str] = None) -> str:
         kwargs: dict = {
             "model": self._model,
@@ -31,7 +37,7 @@ class ClaudeProvider(LLMProvider):
         if system:
             kwargs["system"] = system
         response = await with_retry(self._client.messages.create, **kwargs)
-        return response.content[0].text
+        return self._text(response)
 
     async def generate_structured(
         self, prompt: str, schema: dict, system: Optional[str] = None
@@ -78,4 +84,4 @@ class ClaudeProvider(LLMProvider):
         if system:
             kwargs["system"] = system
         response = await with_retry(self._client.messages.create, **kwargs)
-        return response.content[0].text
+        return self._text(response)

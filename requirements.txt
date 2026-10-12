@@ -57,7 +57,7 @@ idna==3.17
     #   yarl
 jiter==0.15.0
     # via anthropic
-multidict==6.7.1
+multidict==6.9.1
     # via yarl
 packaging==26.2
     # via deprecation
