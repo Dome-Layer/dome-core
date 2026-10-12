@@ -15,7 +15,7 @@ def _provider(stop_reason: str, text: str = '{"ok": true}') -> ClaudeProvider:
     async def create(**kwargs):
         return SimpleNamespace(stop_reason=stop_reason, content=[SimpleNamespace(text=text)])
 
-    provider._client = SimpleNamespace(messages=SimpleNamespace(create=create))
+    provider._client = SimpleNamespace(messages=SimpleNamespace(create=create))  # type: ignore[assignment]
     return provider
 
 
