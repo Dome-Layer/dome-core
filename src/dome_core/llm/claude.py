@@ -42,7 +42,7 @@ class ClaudeProvider(LLMProvider):
     async def generate_structured(
         self, prompt: str, schema: dict, system: Optional[str] = None
     ) -> dict:
-        schema_hint = "\n\nOutput schema — use these exact field names:\n"
+        schema_hint = "\n\nOutput schema (use these exact field names):\n"
         import json
 
         schema_hint += json.dumps(schema, indent=2)
