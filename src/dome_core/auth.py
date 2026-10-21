@@ -8,10 +8,10 @@ auth-rate-limit ceiling) and creates an offline-capable path: the JWKS can be
 fetched-and-cached, or bundled as a static document for an air-gapped deployment.
 
 Public surface:
-  * :class:`Principal` — the verified caller.
-  * :func:`verify_jwt` — local verify with an optional network fallback.
-  * :func:`make_require_user` — the single FastAPI dependency new repos should use.
-  * :func:`make_supabase_fallback` — wraps the legacy ``get_user`` as a fallback.
+  * :class:`Principal`: the verified caller.
+  * :func:`verify_jwt`: local verify with an optional network fallback.
+  * :func:`make_require_user`: the single FastAPI dependency new repos should use.
+  * :func:`make_supabase_fallback`: wraps the legacy ``get_user`` as a fallback.
 
 Failure policy: a genuinely invalid token (bad signature, expired, wrong
 audience/issuer, malformed) always raises :class:`AuthError` and is **never**
@@ -127,9 +127,9 @@ def verify_jwt(
     """Verify a Supabase access token locally and return a :class:`Principal`.
 
     Signing-key resolution (first available wins):
-      1. ``jwks`` — a static JWKS dict/JSON string (no network; air-gapped path).
-      2. ``jwks_url`` — fetched and cached via ``PyJWKClient``.
-      3. ``supabase_url`` — JWKS URL (and issuer) derived from it.
+      1. ``jwks``: a static JWKS dict/JSON string (no network; air-gapped path).
+      2. ``jwks_url``: fetched and cached via ``PyJWKClient``.
+      3. ``supabase_url``: JWKS URL (and issuer) derived from it.
 
     ``audience`` defaults to Supabase's ``"authenticated"``; pass ``None`` to skip
     the audience check. Issuer is checked only when ``verify_iss`` is true (the
@@ -154,7 +154,7 @@ def verify_jwt(
             signing_key = _get_jwks_client(url).get_signing_key_from_jwt(token).key
     except jwt.DecodeError as exc:
         raise AuthError(f"malformed token header: {exc}") from exc
-    except Exception as exc:  # noqa: BLE001 — JWKS unreachable / no kid / misconfig
+    except Exception as exc:  # noqa: BLE001 (JWKS unreachable / no kid / misconfig)
         return _fallback_or_raise(token, network_fallback, repr(exc))
 
     # 2) Verify signature + claims locally. A bad token never reaches the fallback.
@@ -219,7 +219,7 @@ def make_require_user(
 
     Returns a dependency that yields a verified :class:`Principal`. With
     ``optional=True`` a missing/blank Authorization header yields ``None`` (but a
-    *present* invalid token still 401s — never silently demoted to anonymous).
+    *present* invalid token still 401s, never silently demoted to anonymous).
     ``dev_bypass_user`` short-circuits to a fixed principal for local dev only.
     """
 

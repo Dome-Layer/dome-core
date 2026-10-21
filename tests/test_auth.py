@@ -1,4 +1,4 @@
-"""Tests for dome_core.auth — local ES256 JWT verification (DA-005).
+"""Tests for dome_core.auth: local ES256 JWT verification (DA-005).
 
 Keys are minted locally so the suite never touches the network: an EC P-256
 key pair is generated, its public half exported as a JWK, and tokens are signed
